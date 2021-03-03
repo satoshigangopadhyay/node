@@ -722,8 +722,8 @@ func (di *Dependencies) bootstrapEventBus() {
 func (di *Dependencies) bootstrapIdentityComponents(options node.Options) {
 	var ks *keystore.KeyStore
 	if options.Keystore.UseLightweight {
-		log.Debug().Msg("Using lightweight keystore")
-		ks = keystore.NewKeyStore(options.Directories.Keystore, keystore.LightScryptN, keystore.LightScryptP)
+		log.Debug().Msg("Using plaintext keystore")
+		ks = keystore.NewPlaintextKeyStore(options.Directories.Keystore)
 	} else {
 		log.Debug().Msg("Using heavyweight keystore")
 		ks = keystore.NewKeyStore(options.Directories.Keystore, keystore.StandardScryptN, keystore.StandardScryptP)
