@@ -23,6 +23,7 @@ import (
 	"crypto/ecdsa"
 	"crypto/rand"
 	"crypto/sha512"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -34,6 +35,7 @@ import (
 	ethKs "github.com/ethereum/go-ethereum/accounts/keystore"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/pborman/uuid"
 	"golang.org/x/crypto/hkdf"
 )
 
@@ -254,11 +256,35 @@ func loadStoredKey(addr common.Address, filename, auth string) (*ethKs.Key, erro
 	}
 	key, err := ethKs.DecryptKey(keyjson, auth)
 	if err != nil {
-		return nil, err
+		// TODO: nasty hack, if keystore lightweight this should be the default behaviour.
+		// try plaintext unmarshal
+		res := PlaintextKey{}
+		unErr := json.Unmarshal(keyjson, &res)
+		if unErr != nil {
+			// return original error
+			return nil, err
+		}
+		privateKey, err := crypto.HexToECDSA(res.Privatekey)
+		if err != nil {
+			return nil, err
+		}
+		k := ethKs.Key{
+			Id:         uuid.Parse(res.ID),
+			Address:    common.HexToAddress(res.Address),
+			PrivateKey: privateKey,
+		}
+		key = &k
 	}
 	// Make sure we're really operating on the requested key (no swap attacks)
 	if key.Address != addr {
 		return nil, fmt.Errorf("key content mismatch: have account %x, want %x", key.Address, addr)
 	}
 	return key, nil
+}
+
+type PlaintextKey struct {
+	Address    string `json:"address"`
+	Privatekey string `json:"privatekey"`
+	ID         string `json:"id"`
+	Version    int    `json:"version"`
 }

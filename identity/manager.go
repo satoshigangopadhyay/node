@@ -164,3 +164,4 @@ func (idm *identityManager) findAccount(address string) (accounts.Account, error
 
 	return account, err
 }
+

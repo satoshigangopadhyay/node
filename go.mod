@@ -25,6 +25,7 @@ require (
 	github.com/go-openapi/strfmt v0.19.3
 	github.com/gofrs/uuid v3.2.0+incompatible
 	github.com/golang/protobuf v1.4.2
+	github.com/golang/snappy v0.0.3-0.20201103224600-674baa8c7fc3 // indirect
 	github.com/huin/goupnp v1.0.0
 	github.com/jackpal/gateway v1.0.6
 	github.com/jackpal/go-nat-pmp v1.0.2 // indirect
@@ -57,6 +58,7 @@ require (
 	github.com/olekukonko/tablewriter v0.0.2 // indirect
 	github.com/oschwald/geoip2-golang v1.1.0
 	github.com/oschwald/maxminddb-golang v1.5.0 // indirect
+	github.com/pborman/uuid v1.2.0
 	github.com/pierrec/lz4 v2.5.2+incompatible // indirect
 	github.com/pkg/errors v0.8.1
 	github.com/rs/zerolog v1.17.2
