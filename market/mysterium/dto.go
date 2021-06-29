@@ -32,8 +32,9 @@ type ProposalsQuery struct {
 	CompatibilityMin, CompatibilityMax int
 	AccessPolicy, AccessPolicySource   string
 
-	IPType     string
-	QualityMin float32
+	IPType                  string
+	QualityMin              float32
+	IncludeMonitoringFailed bool
 }
 
 // ToURLValues converts the query to url.Values.
@@ -63,6 +64,9 @@ func (q ProposalsQuery) ToURLValues() url.Values {
 	}
 	if q.QualityMin != 0 {
 		values.Set("quality_min", fmt.Sprintf("%.2f", q.QualityMin))
+	}
+	if q.IncludeMonitoringFailed {
+		values.Set("include_monitoring_failed", fmt.Sprint(q.IncludeMonitoringFailed))
 	}
 	return values
 }

@@ -1354,6 +1354,30 @@
         }
       }
     },
+    "/proposals/filter-presets": {
+      "get": {
+        "description": "Returns proposal filter presets",
+        "tags": [
+          "Proposal"
+        ],
+        "summary": "Returns proposal filter presets",
+        "operationId": "proposalFilterPresets",
+        "responses": {
+          "200": {
+            "description": "List of proposal filter presets",
+            "schema": {
+              "$ref": "#/definitions/ListProposalFilterPresetsResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessageDTO"
+            }
+          }
+        }
+      }
+    },
     "/services": {
       "get": {
         "description": "ServiceList provides a list of running services on the node.",
@@ -2433,6 +2457,19 @@
       },
       "x-go-package": "github.com/mysteriumnetwork/node/tequilapi/contract"
     },
+    "CurrentPriceResponse": {
+      "type": "object",
+      "title": "CurrentPriceResponse represents the price.",
+      "properties": {
+        "price_per_gib": {
+          "$ref": "#/definitions/Int"
+        },
+        "price_per_hour": {
+          "$ref": "#/definitions/Int"
+        }
+      },
+      "x-go-package": "github.com/mysteriumnetwork/node/tequilapi/contract"
+    },
     "DNSOption": {
       "description": "DNSOption defines DNS server selection strategy for consumer",
       "type": "string",
@@ -2514,6 +2551,22 @@
       "description": "FieldErrorMap represents a map of field name and corresponding list of errors for that field",
       "type": "object",
       "x-go-package": "github.com/mysteriumnetwork/node/tequilapi/validation"
+    },
+    "FilterPreset": {
+      "type": "object",
+      "title": "FilterPreset is a pre-defined proposal filter.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ID"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name"
+        }
+      },
+      "x-go-package": "github.com/mysteriumnetwork/node/tequilapi/contract"
     },
     "HealthCheckDTO": {
       "type": "object",
@@ -2740,6 +2793,20 @@
             "$ref": "#/definitions/IdentityRefDTO"
           },
           "x-go-name": "Identities"
+        }
+      },
+      "x-go-package": "github.com/mysteriumnetwork/node/tequilapi/contract"
+    },
+    "ListProposalFilterPresetsResponse": {
+      "type": "object",
+      "title": "ListProposalFilterPresetsResponse holds a list of proposal filter presets.",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FilterPreset"
+          },
+          "x-go-name": "Items"
         }
       },
       "x-go-package": "github.com/mysteriumnetwork/node/tequilapi/contract"
