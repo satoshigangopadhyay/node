@@ -84,7 +84,7 @@ install_ubuntu() {
     apt install -y software-properties-common
 
     if [[ "$container" != "docker" ]]; then
-        apt install -y "linux-headers-$(uname -r)"
+        apt install -y "linux-headers-generic"
     fi
 
     # myst
